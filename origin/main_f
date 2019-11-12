@@ -1,0 +1,100 @@
+// glslv output by Cg compiler
+// cgc version 3.1.0013, build date Apr 18 2012
+// command line args: -profile glslv
+// source file: raycasting.cg
+//vendor NVIDIA Corporation
+//version 3.1.0.13
+//profile glslv
+//program main_f
+//semantic main_f.eyePosition
+//semantic main_f.volumeTex : TEXUNIT0
+//semantic main_f.frontDepthTex : TEXUNIT1
+//semantic main_f.backDepthTex : TEXUNIT2
+//var float3 eyePosition :  : _eyePosition1 : 1 : 1
+//var sampler3D volumeTex : TEXUNIT0 : _volumeTex1 0 : 2 : 1
+//var sampler2D frontDepthTex : TEXUNIT1 : _frontDepthTex1 1 : 3 : 1
+//var sampler2D backDepthTex : TEXUNIT2 : _backDepthTex1 2 : 4 : 1
+//var float4 posIn.position : $vin.POSITION :  : 0 : 0
+//var float4 posIn.worldPos : $vin.TEXCOORD0 : ATTR8 : 0 : 1
+//var float4 posIn.projPos : $vin.TEXCOORD1 : ATTR9 : 0 : 1
+//var float4 posIn.texCoord : $vin.TEXCOORD2 : ATTR10 : 0 : 1
+//var float4 result : $vout.COLOR : COL0 : 5 : 1
+
+#version 110
+
+struct VertexIn {
+    vec4 _position;
+    vec4 _texCoord;
+};
+
+struct VertexScreen {
+    vec4 _position1;
+    vec4 _worldPos;
+    vec4 _projPos;
+    vec4 _texCoord1;
+};
+
+vec4 _result1;
+float _TMP4;
+float _TMP3;
+vec4 _TMP2;
+vec4 _TMP1;
+uniform vec3 _eyePosition1;
+uniform sampler3D _volumeTex1;
+uniform sampler2D _frontDepthTex1;
+uniform sampler2D _backDepthTex1;
+
+ // main procedure, the original name was main_f
+void main()
+{
+
+    vec3 _dir;
+    vec2 _uv;
+    float _len;
+    vec3 _norm_dir;
+    vec3 _delta_dir;
+    float _delta_dir_len;
+    vec3 _vec;
+    vec4 _col_acc;
+    float _alpha_acc;
+    float _length_acc;
+    vec4 _color_sample;
+    float _alpha_sample;
+    int _i1;
+
+    _dir = gl_MultiTexCoord0.xyz - _eyePosition1;
+    _TMP3 = dot(_dir, _dir);
+    _TMP4 = inversesqrt(_TMP3);
+    _dir = _TMP4*_dir;
+    _uv = gl_MultiTexCoord1.xy/gl_MultiTexCoord1.w;
+    _TMP1 = texture2D(_frontDepthTex1, _uv);
+    _TMP2 = texture2D(_backDepthTex1, _uv);
+    _len = _TMP2.x - _TMP1.x;
+    _TMP3 = dot(_dir, _dir);
+    _TMP4 = inversesqrt(_TMP3);
+    _norm_dir = _TMP4*_dir;
+    _delta_dir = _norm_dir*9.99999978E-03;
+    _delta_dir_len = length(_delta_dir);
+    _vec = gl_MultiTexCoord2.xyz;
+    _col_acc = vec4( 0.00000000E+00, 0.00000000E+00, 0.00000000E+00, 0.00000000E+00);
+    _alpha_acc = 0.00000000E+00;
+    _length_acc = 0.00000000E+00;
+    _i1 = 0;
+    for (; _i1 < 800; _i1 = _i1 + 1) { // for begin
+        _color_sample = texture3D(_volumeTex1, _vec);
+        _alpha_sample = _color_sample.w*9.99999978E-03;
+        _col_acc = _col_acc + ((1.00000000E+00 - _alpha_acc)*_color_sample)*_alpha_sample*3.00000000E+00;
+        _alpha_acc = _alpha_acc + _alpha_sample;
+        _vec = _vec + _delta_dir;
+        _length_acc = _length_acc + _delta_dir_len;
+        if (_length_acc >= _len || _alpha_acc > 1.00000000E+00) { // if begin
+            { // break begin
+                break;
+            } // end break
+        } // end if
+    } // end for
+    _result1.xyz = _col_acc.xyz*2.00000000E+00 + vec3( 2.00000003E-01, 2.00000003E-01, 2.00000003E-01);
+    _result1.w = _col_acc.w;
+    gl_FrontColor = _result1;
+} // main end
+

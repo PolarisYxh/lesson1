@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -g -g -Wall  -rdynamic CMakeFiles/raycast.dir/src/coordinate_systems_multiple.cpp.o  -o raycast  -L/home/yxh/homework/glraycasting/lib -Wl,-rpath,/home/yxh/homework/glraycasting/lib -lglfw -lX11 -lXrandr -lXinerama -lXi -lXxf86vm -lXcursor -lGL -ldl -lpthread libSTB_IMAGE.a libGLAD.a  -ldl

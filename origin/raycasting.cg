@@ -1,0 +1,72 @@
+struct VertexIn
+{
+	float4 position : POSITION;
+	float4 texCoord: TEXCOORD;
+};
+
+struct VertexScreen
+{
+	float4 position : POSITION;
+	float4 worldPos : TEXCOORD0;
+	float4 projPos : TEXCOORD1;
+	float4 texCoord : TEXCOORD2;
+};
+
+VertexScreen main_v(VertexIn posIn,
+uniform float4x4 world,
+uniform float4x4 worldViewProj,
+uniform float4x4 texViewProj)
+{
+	VertexScreen posOut;
+	posOut.position = mul(worldViewProj, posIn.position);//gl_position
+	posOut.worldPos = mul(world,posIn.position);
+	posOut.projPos = mul(texViewProj, posOut.worldPos);
+	posOut.texCoord = posIn.texCoord;
+	return posOut;
+}
+
+void main_f(VertexScreen posIn,
+	uniform float3 eyePosition,
+	uniform sampler3D volumeTex: register(s0),
+	uniform sampler2D frontDepthTex: register(s1) ,
+	uniform sampler2D backDepthTex: register(s2) ,
+	out float4 result : COLOR)
+{
+	//根据视点和当前顶点世界坐标计算方向
+	float3 dir = posIn.worldPos.xyz-eyePosition;
+	dir = normalize(dir);
+	float3 deltaDir = float3(0.0, 0.0, 0.0);
+	//获取当前顶点的三维纹理坐标
+	float3 tex = posIn.texCoord.xyz;
+	float2 uvDelta;
+	uvDelta.x = 0.0;//ddx( tex ).x;
+	uvDelta.y = 0.0;//ddy( tex ).y;
+	//取出深度间隔值,并设置采样间隔
+	float2 uv= posIn.projPos.xy/posIn.projPos.w;
+	float frontDis = tex2D(frontDepthTex,uv).x;
+	float backDis = tex2D(backDepthTex,uv).x;
+	float len = backDis-frontDis;
+	//初始化颜色值、采样值、透明度
+	float3 norm_dir = normalize(dir);
+	float stepsize = 0.01;
+	float delta = stepsize;
+	float3 delta_dir = norm_dir * delta;
+	float delta_dir_len = length(delta_dir);
+	float3 vec = posIn.texCoord.xyz;
+	float4 col_acc = float4(0,0,0,0);
+	float alpha_acc = 0;
+	float length_acc = 0;
+	float4 color_sample;
+	float alpha_sample;
+	for(int i = 0; i < 800; i++){
+		color_sample = tex3D(volumeTex,vec);
+		alpha_sample = color_sample.a * stepsize;
+		col_acc += (1.0 - alpha_acc) * color_sample * alpha_sample * 3;
+		alpha_acc += alpha_sample;
+		vec += delta_dir;
+		length_acc += delta_dir_len;
+		if(length_acc >= len || alpha_acc > 1.0) break; // 采样循环控制条件
+	}
+	result.xyz = col_acc.xyz*2.0+float3(0.2,0.2,0.2);
+	result.w = col_acc.w;
+}
