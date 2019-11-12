@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "g++ build active file",
+            "command": "cmake ../ && make",
+            "args": [
+            ],
+            "options": {
+                "cwd": "/home/yxh/homework/glraycasting/build"
+            }
+        }
+    ],
+    "version": "2.0.0"
+}
