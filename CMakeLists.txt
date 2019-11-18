@@ -52,6 +52,7 @@ file(GLOB SHADERS
             "src/*.vs"
             "src/*.fs"
             "src/*.gs"
+	    "src/voxel.txt"
 )
 foreach(SHADER ${SHADERS})
         file(COPY ${SHADER} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)

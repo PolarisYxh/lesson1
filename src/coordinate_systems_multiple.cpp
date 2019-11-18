@@ -171,7 +171,7 @@ public:
             indices[k++] = verticeNum - 1 - i - longPart;
             indices[k++] = verticeNum - 2 - i - longPart;
         } 
-        indexNum = (longPart - 1)* latPart * 3 * 2 * sizeof(unsigned int);
+        indexNum = (longPart - 1)* latPart * 3 * 2 ;
 
         //glBufferData(GL_ELEMENT_ARRAY_BUFFER, (longPart - 1)* latPart * 3 * 2 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
     }
@@ -233,6 +233,7 @@ int main()
     spheredata verindex(10,20,20);
     int numV=gettexdata("./voxel.txt");
     int verticeNum=verindex.verticeNum;
+    int indexNum=verindex.indexNum;
     GLfloat * vertices=verindex.getvertices();
     unsigned int * index=verindex.getindices();
     unsigned int VBO, VAO,EBO;
@@ -246,7 +247,7 @@ int main()
     if(vertices&&index)
     {
         glBufferData(GL_ARRAY_BUFFER, verticeNum * 3 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-        glBufferData(GL_ARRAY_BUFFER,sizeof(index),index,GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,indexNum* sizeof(unsigned int),index,GL_STATIC_DRAW);
     }
         
     else 
@@ -324,8 +325,8 @@ int main()
         // create transformations
         glm::mat4 view          = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         glm::mat4 projection    = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 200.0f);//tou shi projection
-        view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -150.0f));
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);//tou shi projection
+        view       = glm::translate(view, glm::vec3(0.0f, 0.0f, -0.0f));
         // pass transformation matrices to the shader
         ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
         ourShader.setMat4("view", view);
@@ -341,7 +342,7 @@ int main()
         //model = glm::scale(model, glm::vec3(zoomX, zoomY, zoomZ));
         ourShader.setMat4("model", model);
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glDrawArrays(GL_TRIANGLES, 0, verticeNum);
+        glDrawElements(GL_TRIANGLES, indexNum,GL_UNSIGNED_INT, 0);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

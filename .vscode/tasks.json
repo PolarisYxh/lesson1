@@ -7,7 +7,7 @@
             "args": [
             ],
             "options": {
-                "cwd": "/home/yxh/homework/glraycasting/build"
+                "cwd": "${workspaceFolder}/build"
             }
         }
     ],
