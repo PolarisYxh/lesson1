@@ -12,7 +12,9 @@ enum Camera_Movement {
     FORWARD,
     BACKWARD,
     LEFT,
-    RIGHT
+    RIGHT,
+    UP,
+    DOWN
 };
 
 // Default camera values
@@ -29,7 +31,7 @@ class Camera
 public:
     // Camera Attributes
     glm::vec3 Position;
-    glm::vec3 Front;
+    glm::vec3 Front;//default (0,0,-1)
     glm::vec3 Up;
     glm::vec3 Right;
     glm::vec3 WorldUp;
@@ -78,6 +80,10 @@ public:
             Position -= Right * velocity;
         if (direction == RIGHT)
             Position += Right * velocity;
+        if(direction == UP)
+            Position += Up*velocity;
+        if(direction == DOWN)
+            Position -= Up*velocity;
     }
 
     // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
