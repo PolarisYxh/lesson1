@@ -24,7 +24,7 @@ const unsigned int SCR_HEIGHT = 600;
 const float PI=3.1415926;
 int numX,numY,numZ;
 
-Camera camera(glm::vec3(0,50,-30),glm::vec3(0,0,-1),-90,-90);
+Camera camera(glm::vec3(0,0,0));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -32,7 +32,7 @@ bool firstMouse = true;
 float deltaTime = 0.0f;	// time between current frame and last frame
 float lastFrame = 0.0f;
 
-GLubyte **** voldata = NULL;
+/*GLubyte **** voldata = NULL;
 
 int gettexdata(std::string fname)
 {
@@ -62,13 +62,13 @@ int gettexdata(std::string fname)
 		for (int j=0;j<numY;j++)
             for (int k=0;k<numZ;k++)
             {
-                voldata[i][j][k] = (GLubyte *) malloc(4 * sizeof(GLubyte));//create a voldata finished
+                voldata[i][j][k] = (GLubyte *) malloc(3 * sizeof(GLubyte));//create a voldata finished
                 float x=0;
 
                 infile>>tem;
                 std::istringstream is(tem);
                 
-                for(int m=0;is>>x&&m<4;m++)
+                for(int m=0;is>>x&&m<3;m++)
                 {
                     is>>n;
                     voldata[i][j][k][m]=x;
@@ -79,120 +79,128 @@ int gettexdata(std::string fname)
                         vertices[cal++][2]=k;
                         //std::cout<<i<<","<<j<<","<<k<<std::endl;
                     }*/
-                }   
+                /*}   
             }
     infile.close();
     return cal; 
-}
-class spheredata
+}*/
+GLubyte * voldata = NULL;
+
+/*int gettexdata(std::string fname)
 {
-private:
-    GLfloat *vertices;//顶点数组
-    unsigned int *indices; //索引数组
-    float radius;
-    int longPart,latPart;
-public:
-    int verticeNum;//顶点数目
-    int indexNum;//索引数目
-    //创建球面顶点
-    spheredata(float r,int longitude,int lat):radius(r),longPart(longitude),latPart(lat)
-    {
-        CreateVertexBuffer();
-        CreateIndexBuffer();
+    std::ifstream infile(fname);
+    if (!infile.is_open()) 
+    { 
+        std::cout << "can't open" << fname << std::endl;
+        //return 0;
     }
-    void CreateVertexBuffer()
-    {
-        ////test
-        //vertices = new GLfloat[3* 3];
-        //vertices[0] = -1.0f;
-        //vertices[1] = -1.0f;
-        //vertices[2] = -1.0f;
-        //vertices[3] = -1.0f;
-        //vertices[4] = -1.0f;
-        //vertices[5] = 1.0f;
-        //vertices[6] = -1.0f;
-        //vertices[7] = 1.0f;
-        //vertices[8] = 1.0f; 
-        verticeNum = longPart * latPart + 2 * longPart;
-        vertices= new GLfloat[verticeNum * 3];
-        for (int i = 0; i < longPart; i++)
-        {
-            vertices[i * 3] = 0;
-            vertices[i * 3 + 1] = 0;
-            vertices[i * 3 + 2] = radius;
-        }    
-        float degreesToRadians = 3.141593f/ 180.0f; //弧度转换
-        float deltaLong = 360.0f / (longPart - 1);//经度每份对应度数
-        float deltaLat = 180.0f / (latPart + 2);//纬度每份对应度数 
-        for (int tempLat = 0; tempLat < latPart; tempLat++)
-        {
-            float tempAngle1 = ((tempLat + 1)* deltaLat) * degreesToRadians;
-            for (int tempLong = 0; tempLong < longPart; tempLong++)
+    int tem;
+    char n;
+    infile>>numX;//ignore space and enter
+    numY=numX;
+    numZ=numX;
+    int cal=0;
+    //create voldata[numX][numY][numZ][4]
+    //vertices=(float **)malloc(numX*numY*numZ*sizeof(float*));
+    //for (int i=0;i<numX*numY*numZ;i++)
+		//vertices[i] = (float *) malloc( 3 * sizeof(float));
+    voldata = (GLubyte *) malloc( numX *numY*numZ*sizeof(GLubyte) );	
+            for (int k=0;k<numX*numY*numZ;k++)
             {
-                float tempAngle2 = (tempLong*deltaLong) * degreesToRadians;
-                int tempIndex = tempLong + tempLat* longPart + longPart;
-                vertices[tempIndex * 3] = sin(tempAngle1) * cos(tempAngle2)* radius;
-                vertices[tempIndex * 3 + 1] = sin(tempAngle1) * sin(tempAngle2)* radius;
-                vertices[tempIndex * 3 + 2] = cos(tempAngle1)* radius;
+                infile>>tem;
+    for z in range(0,NUM):
+        for x in range(0,NUM):
+            for y in range(0,NUM):
+                r=rad**2-((rad-x)**2+(rad-z)**2+(rad-y)**2)            voldata[k]=tem;
+                std::cout<<(GLubyte)voldata[k]<<" ";
             }
-        }
-        for (int i = 0; i < longPart; i++)
-        {
-            vertices[(verticeNum - 1 - i) * 3] = 0;
-            vertices[(verticeNum - 1 - i) * 3 + 1] = 0;
-            vertices[(verticeNum - 1 - i) * 3 + 2] = -1.0f*radius;
-        }
-    }
-
-    void CreateIndexBuffer()
-    {
-        ////test
-        //indices = new unsigned int[3];
-        //indices[0] = 2;
-        //indices[1] = 1;
-        //indices[2] = 0;
-    
-        indices = new unsigned int[(longPart - 1)* latPart * 3 * 2];
-        int k = 0;
-        for (int i = 0; i < longPart - 1; i++)
-        {
-            indices[k++] = i;
-            indices[k++] = i + longPart;
-            indices[k++] = i + longPart + 1;
-        }
-        for (int tempLat = 0; tempLat < latPart-1; tempLat++)
-        {
-            for (int tempLong = 0; tempLong < longPart - 1; tempLong++)
+    infile.close();
+    return cal; 
+}*/
+/*void gettexdata()
+{
+    int rad=21/2;
+    int r;
+    voldata=(GLubyte *)malloc(21*21*21*sizeof(GLubyte));
+    int x,y,z;
+    for(z=0;z<21;z++)
+        for(x=0;x<21;x++)
+            for(y=0;y<21;y++)
             {
-                indices[k++] = tempLong + tempLat * longPart + longPart;
-                indices[k++] = tempLong + tempLat * longPart + 2 * longPart;
-                indices[k++] = tempLong + tempLat * longPart + longPart + 1;
-    
-                indices[k++] = tempLong + tempLat * longPart + 2 * longPart;
-                indices[k++] = tempLong + tempLat * longPart + 1 + 2 * longPart;
-                indices[k++] = tempLong + tempLat * longPart + 1 + longPart;
+                r=rad^2-((rad-x)^2+(rad-z)^2+(rad-y)^2);
+                if(r>=0)
+                    voldata[x*21+y+z*21*21]=0xff;
+                else
+                    voldata[x*21+y+z*21*21]=0x00;
             }
-        }
-        for (int i = 0; i < longPart - 1; i++)
+    for(z=0;z<21;z++)
+        for(x=0;x<21;x++)
+            for(y=0;y<21;y++)
+            std::cout<<(int)voldata[x*21+y+z*21*21]<<" ";
+}*/
+void gettexdata()
+{
+    voldata=(GLubyte *)malloc(8*8*8*sizeof(GLubyte));
+    int x,y,z;
+    int r=0;
+    for(z=0;z<8;z++)
+        for(x=0;x<8;x++)
+            for(y=0;y<8;y++)
+            {
+                if(r==0)
+                   {
+                       voldata[x*8+y+z*64]=0xff;
+                       r=1;
+                   } 
+                else
+                 {
+                     r=0;
+                     voldata[x*8+y+z*8*8]=0x00;
+                 }   
+            }
+    for(z=0;z<8;z++)
+        for(x=0;x<8;x++)
         {
-            indices[k++] = verticeNum - 1 - i;
-            indices[k++] = verticeNum - 1 - i - longPart;
-            indices[k++] = verticeNum - 2 - i - longPart;
-        } 
-        indexNum = (longPart - 1)* latPart * 3 * 2 ;
+            for(y=0;y<8;y++)
+                std::cout<<(int)voldata[x*8+y+z*8*8]<<" ";
+            std::cout<<std::endl;
+        }   
+}
 
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, (longPart - 1)* latPart * 3 * 2 * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-    }
-    GLfloat * getvertices()
+ GLfloat * createImagePlane(int x,int y,float z,int &num,GLfloat * vertex)
+{
+    int scale=100;
+    int scaledo=scale*scale;
+    vertex=new GLfloat[x*y*scaledo*3*4];//x*y*100个点，每个点3个通道
+    int pixel;
+    int i,j;
+    num=x*y*scaledo*4;
+    int num1=x*y*scaledo;
+    for(i=0;i<y*scale;i++)
     {
-        return vertices;
-    }
-    unsigned int * getindices()
-    {
-        return indices;
-    }
-};
+        for(j=0;j<x*scale;j++)
+        {
+            pixel=(i*x*scale+j)*3;
 
+            vertex[pixel]=(GLfloat)i/scale;
+            vertex[pixel+1]=(GLfloat)j/scale;
+            vertex[pixel+2]=z;
+
+            vertex[pixel+num1*3]=(GLfloat)i/scale-1;
+            vertex[pixel+num1*3+1]=(GLfloat)j/scale;
+            vertex[pixel+num1*3+2]=z;
+
+            vertex[pixel+num1*6]=(GLfloat)i/scale;
+            vertex[pixel+num1*6+1]=(GLfloat)j/scale-1;
+            vertex[pixel+num1*6+2]=z;
+
+            vertex[pixel+num1*9]=(GLfloat)i/scale-1;
+            vertex[pixel+num1*9+1]=(GLfloat)j/scale-1;
+            vertex[pixel+num1*9+2]=z;
+        }
+    }
+    return vertex;
+}
 int main()
 {
     // glfw: initialize and configure
@@ -229,36 +237,25 @@ int main()
     }
 
     // configure global opengl state
-    // -----------------------------
-    glDisable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // -----------------------------verindex.getvertices()-----------------------------------
+    gettexdata();
+    int verticeNum;
+
+    GLfloat * vertices=NULL;
+    vertices=createImagePlane(1,1,0.9,verticeNum,vertices);
+    unsigned int VBO, VAO;
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     // build and compile our shader zprogram
     // ------------------------------------
     Shader ourShader("6.3.coordinate_systems.vs", "6.3.coordinate_systems.fs");
 
-    
-
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    spheredata verindex(10,20,20);
-    int numV=gettexdata("./voxel.txt");
-    int verticeNum=verindex.verticeNum;
-    int indexNum=verindex.indexNum;
-    GLfloat * vertices=verindex.getvertices();
-    unsigned int * index=verindex.getindices();
-    unsigned int VBO, VAO,EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1,&EBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,EBO);
-    if(vertices&&index)
+    if(vertices)
     {
         glBufferData(GL_ARRAY_BUFFER, verticeNum * 3 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,indexNum* sizeof(unsigned int),index,GL_STATIC_DRAW);
     }
         
     else 
@@ -282,9 +279,11 @@ int main()
     glGenTextures(1, &texture1);
     glBindTexture(GL_TEXTURE_3D, texture1);
     // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);//GL_CLAMP_TO_EDGE
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);//GL_CLAMP_TO_EDGE
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
+    float borderColor[] = { 0.0f, 1.0f, 1.0f, 1.0f };
+    glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, borderColor);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -294,23 +293,29 @@ int main()
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     //unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
     //3d data field
-
-
+    /*for (int i=0;i<numX;i++)
+		for (int j=0;j<numY;j++)
+            for (int k=0;k<numZ;k++)
+                std::cout<<(int)voldata[i][j][k][0]<<" "<<(int)voldata[i][j][k][1]<<" "<<(int)voldata[i][j][k][2]<<" ";*/
     if (voldata)
     {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, numX, numY, numZ, 0, GL_RGBA, GL_UNSIGNED_BYTE, voldata);
-        glGenerateMipmap(GL_TEXTURE_3D);
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, 8, 8, 8, 0, GL_RED, GL_UNSIGNED_BYTE, voldata);
+       // glGenerateMipmap(GL_TEXTURE_3D);
     }
     else
     {
         std::cout << "Failed to load texture" << std::endl;
     }
     //stbi_image_free(data);
-    free(voldata );
+    free(voldata);
+    free(vertices);
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
     ourShader.use();
     ourShader.setInt("texture1", 0);//tell shader texture1 is unit 0
+    ourShader.setVec3("volExtentMin", glm::vec3(0,0,0));
+    ourShader.setVec3("volExtentMax", glm::vec3(1,1,1));
+    ourShader.setFloat("stepsize",0.001);
     // camera
     glm::vec3 cameraPos   = glm::vec3(0.0f, 50.0f,  -30.0f);
     glm::vec3 cameraFront = glm::vec3(0.0f, -1.0f, 0.0f);
@@ -340,33 +345,27 @@ int main()
         ourShader.use();
 
         // create transformations
-        glm::mat4 view          = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
-        glm::mat4 projection    = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);//tou shi projection
+        //glm::mat4 view          = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        //glm::mat4 projection    = glm::mat4(1.0f);
+        //projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);//tou shi projection
         //view = glm::lookAt(cameraPos,cameraPos+cameraFront,cameraUp);
-        view = camera.GetViewMatrix();
+        ////view = camera.GetViewMatrix();
         // pass transformation matrices to the shader
-        ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-        ourShader.setMat4("view", view);
+        //ourShader.setMat4("projection", projection); // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
+       // ourShader.setMat4("view", view);
 
         // render boxes
         glBindVertexArray(VAO);
         // calculate the model matrix for each object and pass it to shader before drawing
         glm::mat4 model = glm::mat4(1.0f);//initialize a matrix
-        model = glm::translate(model, glm::vec3( 0,  0,  -30.f));
+        model = glm::translate(model, glm::vec3( 0,  0,  0.f));
         //float zoomX = 2./numX;
         //float zoomY = 2./numY;
         //float zoomZ = 2./numZ;
         //model = glm::scale(model, glm::vec3(zoomX, zoomY, zoomZ));
         ourShader.setMat4("model", model);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//GL_LINE
-        glDrawElements(GL_TRIANGLES, indexNum,GL_UNSIGNED_INT, 0);//glDrawArray
-
-        model = glm::scale(model, glm::vec3( 0.5,  0.5,  0.5));
-        model = glm::translate(model, glm::vec3( 0,  0,  30.f));
-        ourShader.setMat4("model", model);
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);//GL_LINE
-        glDrawElements(GL_TRIANGLES, indexNum,GL_UNSIGNED_INT, 0);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//GL_LINE
+        glDrawArrays(GL_POINTS, 0, verticeNum);//glDrawArray
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -----------------------------------LINE--------------------------------------------
         glfwSwapBuffers(window);

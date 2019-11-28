@@ -11,7 +11,7 @@ if __name__ == "__main__":
             for y in range(0,NUM):
                 r=rad**2-((rad-x)**2+(rad-z)**2+(rad-y)**2)
                 if r<0:
-                    fo.write("255,255,255,0 ")#transparent white
+                    fo.write("0,0,0 ")#transparent white
                 else:
-                    fo.write("255,0,0,0.5 ")#semi-transparent red
+                    fo.write("255,0,0 ")#semi-transparent red
             fo.write("\n")
