@@ -24,30 +24,34 @@ void main()
     vec3 direction = vec3(0,0,1);
     direction = normalize(direction);
     //float Color;
-    FragColor = vec4(texture(texture1, position).rrr,1);
+    float Color;
     // Loop for ray traversal
-    /*for (int i = 0; i < 200; i++) // Some large number
+    while(true) // Some large number
     {
-
+        if(dst.w>1.0)
+            break;
+        Color=texture(texture1, position).r;
+        if(Color==1)
+            value = vec4(1,0,0,0.5);
+        else
+            value=vec4(1,1,1,0.);
         // Data access to scalar value in 3D volume texture
-        Color = texture(texture1, position).r;
-        if(Color>0.5)value=vec4(0,0,1,0.5);
-        else if(Color<=0.5)value=vec4(0,1,0,0.);
 
-        scalar = value.x;
+        //scalar = value.x;
         // Apply transfer function
         //float4 src = tex1D(SamplerTransferFunction, scalar);
         // Front-to-back compositing
         dst = (1.0-dst.w) * value + dst;
         // Advance ray position along ray direction
         position = position + direction * stepsize;
-        vec3 temp1 = sign(position - volExtentMin);
+        if(position.z>1)
+            break;
+        /*vec3 temp1 = sign(position - volExtentMin);
         vec3 temp2 = sign(volExtentMax - position);
         float inside = dot(temp1, temp2);
         // ... and exit loop
         if (inside < 3.0)
-            break;
-    }*/
-    //FragColor=value;
-   // FragColor=vec4(Color,0,0,1);
+            break;*/
+    }
+    FragColor=dst;
 }
