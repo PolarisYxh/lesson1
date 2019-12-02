@@ -17,7 +17,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-
+ 
 // settings
 const unsigned int SCR_WIDTH = 600;
 const unsigned int SCR_HEIGHT = 600;
@@ -121,17 +121,35 @@ void gettexdata(int len,int rad)
 {
     int r;
     std::ofstream ofile("./1.txt");
-    voldata=(GLubyte *)malloc(len*len*len*sizeof(GLubyte));
+    voldata=(GLubyte *)malloc(len*len*len*4*sizeof(GLubyte));
     int x,y,z;
     for(z=0;z<len;z++)
         for(x=0;x<len;x++)
             for(y=0;y<len;y++)
             {
                 r=rad*rad-((rad-x)*(rad-x)+(rad-z)*(rad-z)+(rad-y)*(rad-y));
-                if(r>=0)
-                    voldata[x*len+y+z*len*len]=0xff;
+                if(r>=800)
+                {
+                    voldata[x*len*4+y*4+z*len*len*4]=0xff;
+                    voldata[x*len*4+y*4+z*len*len*4+1]=0x00;
+                    voldata[x*len*4+y*4+z*len*len*4+2]=0x00;
+                    voldata[x*len*4+y*4+z*len*len*4+3]=0xee;
+                }
+                else if(r>=0&&r<800)
+                {
+                    voldata[x*len*4+y*4+z*len*len*4]=0x00;
+                    voldata[x*len*4+y*4+z*len*len*4+1]=0xff;
+                    voldata[x*len*4+y*4+z*len*len*4+2]=0x00;
+                    voldata[x*len*4+y*4+z*len*len*4+3]=0x0f;
+                } 
                 else
-                    voldata[x*len+y+z*len*len]=0x00;
+                {
+                    voldata[x*len*4+y*4+z*len*len*4]=0xff;
+                    voldata[x*len*4+y*4+z*len*len*4+1]=0xff;
+                    voldata[x*len*4+y*4+z*len*len*4+2]=0xff;
+                    voldata[x*len*4+y*4+z*len*len*4+3]=0x00;
+                }
+                    
             }
     /*for(z=0;z<len;z++)
     {
@@ -218,7 +236,6 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
@@ -250,7 +267,6 @@ int main()
     int len=128,rad=40;//the len must be 2,4,8,16....
     gettexdata(len,rad);//bianchang and rad
     int verticeNum;
-
     GLfloat * vertices=NULL;
     vertices=createImagePlane(1,1,0.,verticeNum,vertices);//0.628,0.005
     unsigned int VBO, VAO;
@@ -292,24 +308,14 @@ int main()
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);//GL_CLAMP_TO_EDGE
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_BORDER);
-    float borderColor[] = { 0.0f, 1.0f, 1.0f, 1.0f };
+    float borderColor[] = { 1.0f, 1.0f, 1.0f, 0.0f };
     glTexParameterfv(GL_TEXTURE_3D, GL_TEXTURE_BORDER_COLOR, borderColor);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    //int width, height,  nrChannels;
-   
-    //stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
-    //unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/container.jpg").c_str(), &width, &height, &nrChannels, 0);
-    //3d data field
-    /*for (int i=0;i<numX;i++)
-		for (int j=0;j<numY;j++)
-            for (int k=0;k<numZ;k++)
-                std::cout<<(int)voldata[i][j][k][0]<<" "<<(int)voldata[i][j][k][1]<<" "<<(int)voldata[i][j][k][2]<<" ";*/
     if (voldata)
     {
-        glTexImage3D(GL_TEXTURE_3D, 0, GL_RED, len,len,len, 0, GL_RED, GL_UNSIGNED_BYTE, voldata);
+        glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, len,len,len, 0, GL_RGBA, GL_UNSIGNED_BYTE, voldata);
        // glGenerateMipmap(GL_TEXTURE_3D);
     }
     else

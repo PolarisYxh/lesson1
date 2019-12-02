@@ -18,24 +18,16 @@ void main()
     direction = normalize(direction);
     //float Color;
     float Color;
-    // Loop for ray traversal
     while(true) // Some large number
     {
-        if(dst.w>1.0)
+        if(dst.w>1.0||position.z>1.0)
             break;
-        Color=texture(texture1, position).r;
-        if(Color==1)
-            value = vec4(1,0,0,0.5);
-        else
-            value=vec4(1,1,1,0.);
-        // Data access to scalar value in 3D volume texture
-        dst.rgb=dst.rgb*dst.w+value.rgb*value.w*(1-dst.w);
+        value=texture(texture1, position);
+        // Data access to scalar value in 3D volume texture  front to back
+        dst.rgb=dst.rgb+value.rgb*value.w*(1-dst.w);
         dst.w = (1.0-dst.w) * value.w + dst.w;
-        
         // Advance ray position along ray direction
-        position = position + direction * 0.02;
-        if(position.z>1)
-            break;
+        position = position + direction * 0.01;
     }
     FragColor=dst;
 }
