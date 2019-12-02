@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yxh/homework/glraycasting
+CMAKE_SOURCE_DIR = /home/yxh/Documents/homework/lesson1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yxh/homework/glraycasting/build
+CMAKE_BINARY_DIR = /home/yxh/Documents/homework/lesson1/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/STB_IMAGE.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/STB_IMAGE.dir/flags.make
 
 CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o: CMakeFiles/STB_IMAGE.dir/flags.make
 CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o: ../lib/stb_image.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yxh/homework/glraycasting/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o -c /home/yxh/homework/glraycasting/lib/stb_image.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yxh/Documents/homework/lesson1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o -c /home/yxh/Documents/homework/lesson1/lib/stb_image.cpp
 
 CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yxh/homework/glraycasting/lib/stb_image.cpp > CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yxh/Documents/homework/lesson1/lib/stb_image.cpp > CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.i
 
 CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yxh/homework/glraycasting/lib/stb_image.cpp -o CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yxh/Documents/homework/lesson1/lib/stb_image.cpp -o CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.s
 
 CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o.requires:
 
@@ -91,7 +91,7 @@ STB_IMAGE_EXTERNAL_OBJECTS =
 libSTB_IMAGE.a: CMakeFiles/STB_IMAGE.dir/lib/stb_image.cpp.o
 libSTB_IMAGE.a: CMakeFiles/STB_IMAGE.dir/build.make
 libSTB_IMAGE.a: CMakeFiles/STB_IMAGE.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yxh/homework/glraycasting/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libSTB_IMAGE.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yxh/Documents/homework/lesson1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libSTB_IMAGE.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/STB_IMAGE.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/STB_IMAGE.dir/link.txt --verbose=$(VERBOSE)
 
@@ -109,6 +109,6 @@ CMakeFiles/STB_IMAGE.dir/clean:
 .PHONY : CMakeFiles/STB_IMAGE.dir/clean
 
 CMakeFiles/STB_IMAGE.dir/depend:
-	cd /home/yxh/homework/glraycasting/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yxh/homework/glraycasting /home/yxh/homework/glraycasting /home/yxh/homework/glraycasting/build /home/yxh/homework/glraycasting/build /home/yxh/homework/glraycasting/build/CMakeFiles/STB_IMAGE.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/yxh/Documents/homework/lesson1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yxh/Documents/homework/lesson1 /home/yxh/Documents/homework/lesson1 /home/yxh/Documents/homework/lesson1/build /home/yxh/Documents/homework/lesson1/build /home/yxh/Documents/homework/lesson1/build/CMakeFiles/STB_IMAGE.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/STB_IMAGE.dir/depend
 

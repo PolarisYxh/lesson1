@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/yxh/homework/glraycasting/src/coordinate_systems_multiple.cpp" "/home/yxh/homework/glraycasting/build/CMakeFiles/raycast.dir/src/coordinate_systems_multiple.cpp.o"
+  "/home/yxh/Documents/homework/lesson1/src/coordinate_systems_multiple.cpp" "/home/yxh/Documents/homework/lesson1/build/CMakeFiles/raycast.dir/src/coordinate_systems_multiple.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -15,8 +15,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/yxh/homework/glraycasting/build/CMakeFiles/STB_IMAGE.dir/DependInfo.cmake"
-  "/home/yxh/homework/glraycasting/build/CMakeFiles/GLAD.dir/DependInfo.cmake"
+  "/home/yxh/Documents/homework/lesson1/build/CMakeFiles/STB_IMAGE.dir/DependInfo.cmake"
+  "/home/yxh/Documents/homework/lesson1/build/CMakeFiles/GLAD.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

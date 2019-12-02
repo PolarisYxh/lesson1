@@ -1,5 +1,5 @@
-/home/yxh/homework/glraycasting/build/CMakeFiles/edit_cache.dir
-/home/yxh/homework/glraycasting/build/CMakeFiles/raycast.dir
-/home/yxh/homework/glraycasting/build/CMakeFiles/rebuild_cache.dir
-/home/yxh/homework/glraycasting/build/CMakeFiles/STB_IMAGE.dir
-/home/yxh/homework/glraycasting/build/CMakeFiles/GLAD.dir
+/home/yxh/Documents/homework/lesson1/build/CMakeFiles/edit_cache.dir
+/home/yxh/Documents/homework/lesson1/build/CMakeFiles/raycast.dir
+/home/yxh/Documents/homework/lesson1/build/CMakeFiles/rebuild_cache.dir
+/home/yxh/Documents/homework/lesson1/build/CMakeFiles/STB_IMAGE.dir
+/home/yxh/Documents/homework/lesson1/build/CMakeFiles/GLAD.dir

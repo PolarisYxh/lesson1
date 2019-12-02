@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yxh/homework/glraycasting
+CMAKE_SOURCE_DIR = /home/yxh/Documents/homework/lesson1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yxh/homework/glraycasting/build
+CMAKE_BINARY_DIR = /home/yxh/Documents/homework/lesson1/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/GLAD.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/GLAD.dir/flags.make
 
 CMakeFiles/GLAD.dir/lib/glad.c.o: CMakeFiles/GLAD.dir/flags.make
 CMakeFiles/GLAD.dir/lib/glad.c.o: ../lib/glad.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yxh/homework/glraycasting/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/GLAD.dir/lib/glad.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GLAD.dir/lib/glad.c.o   -c /home/yxh/homework/glraycasting/lib/glad.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yxh/Documents/homework/lesson1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/GLAD.dir/lib/glad.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GLAD.dir/lib/glad.c.o   -c /home/yxh/Documents/homework/lesson1/lib/glad.c
 
 CMakeFiles/GLAD.dir/lib/glad.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GLAD.dir/lib/glad.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yxh/homework/glraycasting/lib/glad.c > CMakeFiles/GLAD.dir/lib/glad.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yxh/Documents/homework/lesson1/lib/glad.c > CMakeFiles/GLAD.dir/lib/glad.c.i
 
 CMakeFiles/GLAD.dir/lib/glad.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GLAD.dir/lib/glad.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yxh/homework/glraycasting/lib/glad.c -o CMakeFiles/GLAD.dir/lib/glad.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yxh/Documents/homework/lesson1/lib/glad.c -o CMakeFiles/GLAD.dir/lib/glad.c.s
 
 CMakeFiles/GLAD.dir/lib/glad.c.o.requires:
 
@@ -91,7 +91,7 @@ GLAD_EXTERNAL_OBJECTS =
 libGLAD.a: CMakeFiles/GLAD.dir/lib/glad.c.o
 libGLAD.a: CMakeFiles/GLAD.dir/build.make
 libGLAD.a: CMakeFiles/GLAD.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yxh/homework/glraycasting/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libGLAD.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yxh/Documents/homework/lesson1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libGLAD.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/GLAD.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GLAD.dir/link.txt --verbose=$(VERBOSE)
 
@@ -109,6 +109,6 @@ CMakeFiles/GLAD.dir/clean:
 .PHONY : CMakeFiles/GLAD.dir/clean
 
 CMakeFiles/GLAD.dir/depend:
-	cd /home/yxh/homework/glraycasting/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yxh/homework/glraycasting /home/yxh/homework/glraycasting /home/yxh/homework/glraycasting/build /home/yxh/homework/glraycasting/build /home/yxh/homework/glraycasting/build/CMakeFiles/GLAD.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/yxh/Documents/homework/lesson1/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yxh/Documents/homework/lesson1 /home/yxh/Documents/homework/lesson1 /home/yxh/Documents/homework/lesson1/build /home/yxh/Documents/homework/lesson1/build /home/yxh/Documents/homework/lesson1/build/CMakeFiles/GLAD.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/GLAD.dir/depend
 

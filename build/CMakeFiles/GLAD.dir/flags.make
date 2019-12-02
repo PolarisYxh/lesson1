@@ -6,5 +6,5 @@ C_FLAGS = -g
 
 C_DEFINES = 
 
-C_INCLUDES = -I/home/yxh/homework/glraycasting/includes 
+C_INCLUDES = -I/home/yxh/Documents/homework/lesson1/includes 
 

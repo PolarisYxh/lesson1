@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/yxh/homework/glraycasting/lib/glad.c" "/home/yxh/homework/glraycasting/build/CMakeFiles/GLAD.dir/lib/glad.c.o"
+  "/home/yxh/Documents/homework/lesson1/lib/glad.c" "/home/yxh/Documents/homework/lesson1/build/CMakeFiles/GLAD.dir/lib/glad.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

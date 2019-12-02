@@ -6,5 +6,5 @@ CXX_FLAGS = -std=c++11 -g -g -Wall
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/yxh/homework/glraycasting/includes 
+CXX_INCLUDES = -I/home/yxh/Documents/homework/lesson1/includes 
 
