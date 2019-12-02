@@ -19,7 +19,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
+const unsigned int SCR_WIDTH = 600;
 const unsigned int SCR_HEIGHT = 600;
 const float PI=3.1415926;
 int numX,numY,numZ;
@@ -178,7 +178,7 @@ void gettexdata(int len,int rad)
 
  GLfloat * createImagePlane(int x,int y,float z,int &num,GLfloat * vertex)
 {
-    int scale=100;
+    int scale=1000;
     int scaledo=scale*scale;
     vertex=new GLfloat[x*y*scaledo*3*4];//x*y*100个点，每个点3个通道
     int pixel;
@@ -252,7 +252,7 @@ int main()
     int verticeNum;
 
     GLfloat * vertices=NULL;
-    vertices=createImagePlane(1,1,0.5,verticeNum,vertices);//0.628,0.005
+    vertices=createImagePlane(1,1,0.,verticeNum,vertices);//0.628,0.005
     unsigned int VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -325,7 +325,7 @@ int main()
     ourShader.setInt("texture1", 0);//tell shader texture1 is unit 0
     ourShader.setVec3("volExtentMin", glm::vec3(0,0,0));
     ourShader.setVec3("volExtentMax", glm::vec3(1,1,1));
-    ourShader.setFloat("stepsize",0.001);
+    ourShader.setFloat("stepsize",0.01);
     // camera
     glm::vec3 cameraPos   = glm::vec3(0.0f, 50.0f,  -30.0f);
     glm::vec3 cameraFront = glm::vec3(0.0f, -1.0f, 0.0f);

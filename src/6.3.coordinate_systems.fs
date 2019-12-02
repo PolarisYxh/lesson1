@@ -10,17 +10,10 @@ uniform vec3 volExtentMax;
 
 void main()
 {
-    //FragColor=vec4(0.0f,0.0f,0.0f,1.0f);
-    //FragColor = texture(texture1, TexCoord);
     vec4 value;
     float scalar;
-    //vec3 vpos=FromtPosTovPos;
-    // Initialize accumulated color and opacity
     vec4 dst = vec4(0,0,0,0);
-    // Determine volume entry position
     vec3 position = TexCoord;
-    // Compute ray direction
-    //vec3 direction = TexCoord.xyz - vec3(0,0,3);
     vec3 direction = vec3(0,0,1);
     direction = normalize(direction);
     //float Color;
@@ -36,22 +29,13 @@ void main()
         else
             value=vec4(1,1,1,0.);
         // Data access to scalar value in 3D volume texture
-
-        //scalar = value.x;
-        // Apply transfer function
-        //float4 src = tex1D(SamplerTransferFunction, scalar);
-        // Front-to-back compositing
-        dst = (1.0-dst.w) * value + dst;
+        dst.rgb=dst.rgb*dst.w+value.rgb*value.w*(1-dst.w);
+        dst.w = (1.0-dst.w) * value.w + dst.w;
+        
         // Advance ray position along ray direction
-        position = position + direction * stepsize;
+        position = position + direction * 0.02;
         if(position.z>1)
             break;
-        /*vec3 temp1 = sign(position - volExtentMin);
-        vec3 temp2 = sign(volExtentMax - position);
-        float inside = dot(temp1, temp2);
-        // ... and exit loop
-        if (inside < 3.0)
-            break;*/
     }
     FragColor=dst;
 }
